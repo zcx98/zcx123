@@ -4,16 +4,86 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.clive.mapper.TbItemMapper">
-	<select id="findTbItemById" parameterType="long" resultType="com.clive.bean.TbItem">
+	<select id="findTbItemById" parameterType="long"
+		resultType="com.clive.bean.TbItem">
 		SELECT * FROM tbitem WHERE id = #{id}
 	</select>
 	<select id="findTbItemAll" resultType="com.clive.bean.TbItem">
 		SELECT * FROM tbitem
 	</select>
 	<select id="findTbItemCount" resultType="int">
-		SELECT COUNT(*) FROM tbitem
+		SELECT COUNT(*) FROM
+		tbitem
 	</select>
-	<select id="findItemByPage" parameterType="int" resultType="com.clive.bean.TbItem">
+	<select id="findItemByPage" parameterType="int"
+		resultType="com.clive.bean.TbItem">
 		SELECT * FROM tbitem LIMIT #{index},#{pageSize}
+	</select>
+	<delete id="deleteItemByIds">
+		UPDATE tbitem SET `status`=3
+		<where>
+			<foreach collection="ids" open="id in(" separator="," close=")"
+				item="id">
+				#{id}
+			</foreach>
+		</where>
+	</delete>
+	<update id="updateItemByIds">
+		<if test="type==1">
+			UPDATE tbitem SET `status`=1,updated=#{date}
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")"
+					item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+		<if test="type==3">
+			UPDATE tbitem SET `status`=3,updated=#{date}
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")"
+					item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+		<if test="type==2">
+			UPDATE tbitem SET `status`=2,updated=#{date}
+			<where>
+				<foreach collection="ids" open="id in(" separator="," close=")"
+					item="id">
+					#{id}
+				</foreach>
+			</where>
+		</if>
+	</update>
+	<select id="findSearchCount" resultType="int">
+		SELECT COUNT(*) FROM tbitem
+		<where>
+			<if test="title!=null and title!=''">
+				AND title LIKE CONCAT(CONCAT('%', #{title}), '%')
+			</if>
+			<if test="sellPoint!=null and sellPoint!=''">
+				AND sellPoint LIKE CONCAT(CONCAT('%', #{sellPoint}), '%')
+			</if>
+			<if test="price!=null and price!=''">
+				AND price LIKE CONCAT(CONCAT('%', #{price}), '%')
+			</if>
+		</where>
+	</select>
+	<select id="findSearchByPage" resultType="com.clive.bean.TbItem">
+		SELECT * FROM tbitem
+		<where>
+			<if test="title!=null and title!=''">
+				AND title LIKE CONCAT(CONCAT('%', #{title}), '%')
+			</if>
+			<if test="sellPoint!=null and sellPoint!=''">
+				AND sellPoint LIKE CONCAT(CONCAT('%', #{sellPoint}), '%')
+			</if>
+			<if test="price!=null and price!=''">
+				AND price LIKE CONCAT(CONCAT('%', #{price}), '%')
+			</if>
+		</where>
+		LIMIT #{index},#{pageSize}
 	</select>
 </mapper>

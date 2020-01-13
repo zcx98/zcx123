@@ -5,19 +5,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>淘淘商城后台</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/layui/css/layui.css" />
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/index.js"></script>
+
 </head>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
-		<div class="layui-header">
-			<div class="layui-logo">淘淘商城后台系统</div>
+		<div class="layui-header" style="background-color:#278295">
+			<div class="layui-logo" style="color: white;font-size: large;">淘淘商城后台管理系统</div>
 			<!-- 头部区域（可配合layui已有的水平导航） -->
-
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item"><a href=""><i class="layui-icon layui-icon-home" style="font-size: 16px; color:#F0F8FF;"></i> 首页</a></li>
+				<li class="layui-nav-item"><a href="">合作机构</a></li>
+				<li class="layui-nav-item"><a href="">商品管理</a></li>
+				<li class="layui-nav-item"><a href="">用户</a></li>
+				<li class="layui-nav-item"><a href="javascript:;">其它系统</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="">邮件管理</a>
+						</dd>
+						<dd>
+							<a href="">消息管理</a>
+						</dd>
+						<dd>
+							<a href="">授权管理</a>
+						</dd>
+					</dl></li>
+			</ul>
 			<ul class="layui-nav layui-layout-right">
-				<li class="layui-nav-item"><a href="javascript:;"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">admin</a>
+				<li class="layui-nav-item"><a href="javascript:;"><img
+						src="http://image.biaobaiju.com/uploads/20180802/01/1533146053-MPleGLypUw.jpg" class="layui-nav-img">Adonia</a>
 					<dl class="layui-nav-child">
 						<dd>
 							<a href="">个人中心</a>
@@ -30,10 +50,10 @@
 			</ul>
 		</div>
 
-		<div class="layui-side layui-bg-black">
+		<div class="layui-side layui-bg-green">
 			<div class="layui-side-scroll">
 				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-				<ul class="layui-nav layui-nav-tree" lay-filter="test">
+				<ul class="layui-nav layui-nav-tree layui-bg-green" lay-filter="test">
 					<li class="layui-nav-item"><a class="" href="javascript:;">商品管理</a>
 						<dl class="layui-nav-child">
 							<dd>
@@ -110,16 +130,16 @@
 			</div>
 		</div>
 
-		<div class="layui-body">
+		<div class="layui-body layui-bg-gray">
 			<!-- 内容主体区域
 				 $("#content").load("/jsp/showItem.jsp");
 			 -->
 			<div id="content" style="padding: 15px;">内容主体区域</div>
 		</div>
 
-		<div class="layui-footer">
+		<div class="layui-footer" style="background-color:#dddddd;">
 			<!-- 底部固定区域 -->
-			© 欢迎来到淘淘商城后台管理系统
+			<font>© 欢迎来到淘淘商城后台管理系统</font>
 		</div>
 	</div>
 </body>
