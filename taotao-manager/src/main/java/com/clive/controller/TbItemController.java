@@ -70,11 +70,10 @@ public class TbItemController {
 
 	@RequestMapping("/search")
 	@ResponseBody
-	public LayuiTableResult search(String title, String sellPoint, Long price, Integer page, Integer limit)
-			throws UnsupportedEncodingException {
+	public LayuiTableResult search(String title, Integer priceMin, Integer priceMax, Long cId, Integer page,
+			Integer limit) throws UnsupportedEncodingException {
 		title = new String(title.getBytes("ISO-8859-1"), "UTF-8");
-		sellPoint = new String(sellPoint.getBytes("ISO-8859-1"), "UTF-8");
-		LayuiTableResult result = tbItemService.search(title, sellPoint, price, page, limit);
+		LayuiTableResult result = tbItemService.search(title, priceMin, priceMax, cId, page, limit);
 		return result;
 	}
 }

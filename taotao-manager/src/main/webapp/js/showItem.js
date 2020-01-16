@@ -13,56 +13,56 @@ $(function(){
 			} ],
 			title : '商品表',
 			cols : [ 
-			         [ 
-			{
-				type : 'checkbox',
-				fixed : 'left'
-			}, {
-				field : 'id',
-				title : 'ID',
-				width : 60,
-				fixed : 'left'
-			}, {
-				field : 'title',
-				title : '商品名称',
-				width : 95
-			}, {
-				field : 'sellPoint',
-				title : '商品卖点',
-				width : 95
-			}, {
-				field : 'price',
-				title : '商品价格',
-				width : 95
-			}, {
-				field : 'num',
-				title : '商品数量',
-				width : 90
-			}, {
-				field : 'cId',
-				title : '商品类目',
-				width : 90
-			}, {
-				field : 'status',
-				title : '商品状态',
-				width : 95,
-				templet: '#titleTpl',
-				sort : true
-			},{
-				field : 'created',
-				title : '创建时间',
-				templet:'<div>{{ layui.util.toDateString(d.created, "yyyy-MM-dd HH:mm:ss") }}</div>',
-				width : 90
-			},{
-				field : 'updated',
-				title : '更新时间',
-				templet:'<div>{{ layui.util.toDateString(d.updated, "yyyy-MM-dd HH:mm:ss") }}</div>',
-				width : 90
-			},
-			{fixed: 'right', title:'操作', toolbar: '#barDemo', width:115}
-				]
-			],
-			page : true
+			        [ 
+			         {
+			        	 type : 'checkbox',
+			        	 fixed : 'left'
+			         }, {
+			        	 field : 'id',
+			        	 title : 'ID',
+			        	 width : 60,
+			        	 fixed : 'left'
+			         }, {
+			        	 field : 'title',
+			        	 title : '商品名称',
+			        	 width : 95
+			         }, {
+			        	 field : 'sellPoint',
+			        	 title : '商品卖点',
+			        	 width : 95
+			         }, {
+			        	 field : 'price',
+			        	 title : '商品价格',
+			        	 width : 95
+			         }, {
+			        	 field : 'num',
+			        	 title : '商品数量',
+			        	 width : 90
+			         }, {
+			        	 field : 'cId',
+			        	 title : '商品类目',
+			        	 width : 90
+			         }, {
+			        	 field : 'status',
+			        	 title : '商品状态',
+			        	 width : 95,
+			        	 templet: '#titleTpl',
+			        	 sort : true
+			         },{
+			        	 field : 'created',
+			        	 title : '创建时间',
+			        	 templet:'<div>{{ layui.util.toDateString(d.created, "yyyy-MM-dd HH:mm:ss") }}</div>',
+			        	 width : 90
+			         },{
+			        	 field : 'updated',
+			        	 title : '更新时间',
+			        	 templet:'<div>{{ layui.util.toDateString(d.updated, "yyyy-MM-dd HH:mm:ss") }}</div>',
+			        	 width : 90
+			         },
+			         {fixed: 'right', title:'操作', toolbar: '#barDemo', width:115}
+			         ]
+			        ],
+			        page : true
 		});
 		//头工具栏事件
 		table.on('toolbar(itemToolBar)', function(obj){
@@ -124,18 +124,31 @@ $(function(){
 				break;
 			case 'search':
 				var title=$("#title-search").val();
-				var sellPoint=$("#sellPoint-search").val();
-				var price=$("#price-search").val();
+				var cidContent = $("#cidContent").val();
+				var priceMin = $("#priceMin").val();
+				var priceMax = $("#priceMax").val();
 				table.reload('showItemPage', {
-                    url:"/item/search",
-                    where: {
-                    	title:title,
-                    	sellPoint:sellPoint,
-                    	price:price
-                    }
-                });
+					url:"/item/search",
+					where: {
+						title:title,
+						cId:cidContent,
+						priceMin:priceMin,
+						priceMax:priceMax
+					}
+				});
+				break;
+			case 'cid':
+				layer.open({
+					type: 2,
+					title: '商品分类选择',
+					shadeClose: true,
+					shade: 0.8,
+					area: ['380px', '90%'],
+					content: '/jsp/showZtree.jsp', 
+					btn: ['确定','取消'], //按钮
+				});
 				break;
 			};
 		});
-	});
+	}); 
 })

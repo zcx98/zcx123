@@ -59,8 +59,25 @@ public interface TbItemMapper {
 	 * @param price
 	 * @return
 	 */
-	int findSearchCount(@Param("title") String title, @Param("sellPoint") String sellPoint, @Param("price") Long price);
+	int findSearchCount(@Param("title") String title, @Param("priceMin") Integer priceMin,
+			@Param("priceMax") Integer priceMax, @Param("cId") Long cId);
 
-	List<TbItem> findSearchByPage(@Param("title") String title, @Param("sellPoint") String sellPoint,
-			@Param("price") Long price, @Param("index") Integer index, @Param("pageSize") Integer pageSize);
+	List<TbItem> findSearchByPage(@Param("title") String title, @Param("priceMin") Integer priceMin,
+			@Param("priceMax") Integer priceMax, @Param("cId") Long cId, @Param("index") Integer index,
+			@Param("pageSize") Integer pageSize);
+
+	/**
+	 * 统计商品分类id
+	 * 
+	 * @return
+	 */
+	List<TbItem> statisticsItemCId();
+
+	/**
+	 * 根据分类id查询商品表中该分类的商品数量
+	 * 
+	 * @param getcId
+	 * @return
+	 */
+	int findTbItemCountByCId(@Param("cId") Long cId);
 }

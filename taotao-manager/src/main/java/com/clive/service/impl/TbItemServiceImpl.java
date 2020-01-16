@@ -57,6 +57,9 @@ public class TbItemServiceImpl implements TbItemService {
 	@Override
 	public TaotaoResult updateItems(List<TbItem> items, Integer type, Date date) {
 		List<Long> ids = new ArrayList<Long>();
+		if (items.size() <= 0) {
+			return TaotaoResult.build(500, "不好意思，您还没有选择要进行操作的商品哟");
+		}
 		for (TbItem tbItem : items) {
 			ids.add(tbItem.getId());
 		}
@@ -72,12 +75,24 @@ public class TbItemServiceImpl implements TbItemService {
 	}
 
 	@Override
-	public LayuiTableResult search(String title, String sellPoint, Long price, Integer page, Integer limit) {
+	public LayuiTableResult search(String title, Integer priceMin, Integer priceMax, Long cId, Integer page,
+			Integer limit) {
+		if (priceMin == null) {
+			priceMin = 0;
+		}
+		if (priceMax == null) {
+			priceMax = 10000000;
+		}
 		LayuiTableResult result = new LayuiTableResult();
 		result.setCode(0);
 		result.setMsg("");
-		result.setCount(tbItemMapper.findSearchCount(title, sellPoint, price));
-		List<TbItem> data = tbItemMapper.findSearchByPage(title, sellPoint, price, ((page - 1) * limit), limit);
+		int count = tbItemMapper.findSearchCount(title, priceMin, priceMax, cId);
+		result.setCount(count);
+		if (count <= 0) {
+			result.setMsg("没有商品信息");
+			return result;
+		}
+		List<TbItem> data = tbItemMapper.findSearchByPage(title, priceMin, priceMax, cId, ((page - 1) * limit), limit);
 		result.setData(data);
 		return result;
 	}

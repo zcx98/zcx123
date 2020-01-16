@@ -31,12 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateItemByIds">
 		<if test="type==1">
 			UPDATE tbitem SET `status`=1,updated=#{date}
-			<where>
-				<foreach collection="ids" open="id in(" separator="," close=")"
-					item="id">
-					#{id}
-				</foreach>
-			</where>
+				<where>
+					<foreach collection="ids" open="id in(" separator=","
+						close=")" item="id">
+						#{id}
+					</foreach>
+				</where>
 		</if>
 		<if test="type==3">
 			UPDATE tbitem SET `status`=3,updated=#{date}
@@ -58,32 +58,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</update>
 	<select id="findSearchCount" resultType="int">
-		SELECT COUNT(*) FROM tbitem
-		<where>
-			<if test="title!=null and title!=''">
-				AND title LIKE CONCAT(CONCAT('%', #{title}), '%')
-			</if>
-			<if test="sellPoint!=null and sellPoint!=''">
-				AND sellPoint LIKE CONCAT(CONCAT('%', #{sellPoint}), '%')
-			</if>
-			<if test="price!=null and price!=''">
-				AND price LIKE CONCAT(CONCAT('%', #{price}), '%')
-			</if>
-		</where>
+		SELECT COUNT(*) FROM tbitem WHERE price BETWEEN #{priceMin} AND
+		#{priceMax}
+		<if test="title!=null and title!=''">
+			AND title LIKE '%${title}%'
+		</if>
+		<if test="cId!=null">
+			AND cId = #{cId}
+		</if>
 	</select>
 	<select id="findSearchByPage" resultType="com.clive.bean.TbItem">
-		SELECT * FROM tbitem
-		<where>
-			<if test="title!=null and title!=''">
-				AND title LIKE CONCAT(CONCAT('%', #{title}), '%')
-			</if>
-			<if test="sellPoint!=null and sellPoint!=''">
-				AND sellPoint LIKE CONCAT(CONCAT('%', #{sellPoint}), '%')
-			</if>
-			<if test="price!=null and price!=''">
-				AND price LIKE CONCAT(CONCAT('%', #{price}), '%')
-			</if>
-		</where>
+		SELECT * FROM tbitem WHERE price BETWEEN #{priceMin} AND #{priceMax}
+		<if test="title!=null and title!=''">
+			AND title LIKE '%${title}%'
+		</if>
+		<if test="cId!=null">
+			AND cId = #{cId}
+		</if>
 		LIMIT #{index},#{pageSize}
+	</select>
+	<select id="statisticsItemCId" resultType="com.clive.bean.TbItem">
+		SELECT * FROM tbitem GROUP BY cId
+	</select>
+	<select id="findTbItemCountByCId" resultType="int">
+		SELECT COUNT(*) FROM tbitem WHERE cId = #{cId}
 	</select>
 </mapper>

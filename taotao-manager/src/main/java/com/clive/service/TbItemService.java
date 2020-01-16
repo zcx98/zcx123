@@ -55,6 +55,6 @@ public interface TbItemService {
 	 * @param price
 	 * @return
 	 */
-	LayuiTableResult search(String title, String sellPoint, Long price, Integer page, Integer limit);
+	LayuiTableResult search(String title, Integer priceMin, Integer priceMax, Long cId, Integer page, Integer limit);
 
 }
